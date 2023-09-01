@@ -1,4 +1,4 @@
-package br.com.challengejava.orderapplication.model;
+package br.com.challengejava.orderapplication.model.users;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,29 +7,28 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
-import java.math.BigDecimal;
 
 @Entity
-@Table(name = "item_do_pedido")
+@Table(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderItem {
+public class User {
+
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    private BigDecimal price;
+    private String email;
 
     @NotNull
-    @Positive
-    private Integer amount;
+    private String user_name;
+    private String password;
 
-    private BigDecimal partialAmount;
+    @NotNull
+    private String name;
 
-    @ManyToOne(optional=false)
-    private Order order;
-
+    @NotNull
+    private String phone_number;
 }

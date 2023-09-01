@@ -1,16 +1,18 @@
-package br.com.challengejava.orderapplication.model;
+package br.com.challengejava.orderapplication.model.orders;
 
+import br.com.challengejava.orderapplication.enums.Status;
+import br.com.challengejava.orderapplication.model.users.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "orders")
@@ -21,9 +23,15 @@ import java.util.List;
 public class Order {
 
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
+    private UUID id;
 
-    @NotNull @Enumerated(EnumType.STRING)
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User userId;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+
     private Status status;
 
     @Column

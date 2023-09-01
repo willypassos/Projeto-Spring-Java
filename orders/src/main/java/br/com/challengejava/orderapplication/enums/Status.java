@@ -1,4 +1,4 @@
-package br.com.challengejava.orderapplication.model;
+package br.com.challengejava.orderapplication.enums;
 
 public enum Status {
     CREATED,

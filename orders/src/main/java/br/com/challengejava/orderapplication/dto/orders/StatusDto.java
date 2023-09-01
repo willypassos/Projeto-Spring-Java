@@ -1,6 +1,6 @@
-package br.com.challengejava.orderapplication.dto;
+package br.com.challengejava.orderapplication.dto.orders;
 
-import br.com.challengejava.orderapplication.model.Status;
+import br.com.challengejava.orderapplication.enums.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

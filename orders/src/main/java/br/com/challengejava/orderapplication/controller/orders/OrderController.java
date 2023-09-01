@@ -1,9 +1,12 @@
-package br.com.challengejava.orderapplication.controller;
+package br.com.challengejava.orderapplication.controller.orders;
 
-import br.com.challengejava.orderapplication.dto.OrderDTO;
-import br.com.challengejava.orderapplication.dto.StatusDto;
-import br.com.challengejava.orderapplication.service.OrderService;
+import br.com.challengejava.orderapplication.dto.orders.OrderDTO;
+import br.com.challengejava.orderapplication.dto.orders.StatusDto;
+import br.com.challengejava.orderapplication.service.orders.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -11,7 +14,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.net.URI;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -22,8 +24,8 @@ public class OrderController {
     private OrderService service;
 
     @GetMapping("/")
-    public List<OrderDTO> getAllOrders() {
-        return service.getAllOrders();
+    public Page<OrderDTO> getAllOrders(@PageableDefault(size = 10) Pageable pagination)  {
+        return service.getAllOrders(pagination);
     }
 
     @GetMapping("/{id}")
@@ -42,13 +44,10 @@ public class OrderController {
         return ResponseEntity.created(uri).body(orderCreated);
 
     }
-
-
     @PutMapping("/{id}/status")
-    public ResponseEntity<OrderDTO> updateOrderStatus(@PathVariable UUID id, @RequestBody StatusDto status) {
-        OrderDTO dto = service.updateOrderStatus(id, status);
-
-        return ResponseEntity.ok(dto);
+    public ResponseEntity<OrderDTO> updateOrder(@PathVariable UUID id, @RequestBody  StatusDto status) {
+        OrderDTO update = service.updateOrder(id, status);
+        return ResponseEntity.ok(update);
     }
 }
 
