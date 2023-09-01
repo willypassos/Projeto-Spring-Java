@@ -1,5 +1,7 @@
 package br.com.challengejava.orderapplication.model.users;
 
+import br.com.challengejava.orderapplication.model.orders.Order;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +9,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -31,4 +35,8 @@ public class User {
 
     @NotNull
     private String phone_number;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user_id")
+    private List<Order> orders = new ArrayList<>();
 }

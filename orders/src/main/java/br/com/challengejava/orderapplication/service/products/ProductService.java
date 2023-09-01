@@ -10,6 +10,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class ProductService {
     @Autowired
@@ -18,10 +21,10 @@ public class ProductService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public Page<ProductDTO>getAllProducts(Pageable pagination) {
-        return productRepository
-                .findAll(pagination)
-                .map(order -> modelMapper.map(order,ProductDTO.class));
+    public List<ProductDTO> getAllProducts( ) {
+        return productRepository.findAll().stream()
+                .map(p -> modelMapper.map(p, ProductDTO.class))
+                .collect(Collectors.toList());
     }
 
     public ProductDTO getProductById(Long id) {

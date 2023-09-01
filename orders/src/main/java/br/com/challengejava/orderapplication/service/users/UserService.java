@@ -12,6 +12,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class UserService {
     @Autowired
@@ -20,10 +23,10 @@ public class UserService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public Page<UserDTO>getAllUsers(Pageable pagination) {
-        return userRepository
-                .findAll(pagination)
-                .map(user -> modelMapper.map(user,UserDTO.class));
+    public List<UserDTO> getAllUsers( ) {
+        return userRepository.findAll().stream()
+                .map(p -> modelMapper.map(p, UserDTO.class))
+                .collect(Collectors.toList());
     }
 
     public UserDTO getUserById(Long id) {

@@ -20,4 +20,6 @@ public class OrderDTO  {
     private BigDecimal totalPrice;
     private List<OrderItemDto> items = new ArrayList<>();
 
+    public OrderDTO(int i, String number, String created, double v, List<String> items) {
+    }
 }

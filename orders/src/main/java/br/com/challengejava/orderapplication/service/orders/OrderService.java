@@ -8,13 +8,13 @@ import br.com.challengejava.orderapplication.enums.Status;
 import br.com.challengejava.orderapplication.repository.orders.OrderRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -24,10 +24,10 @@ public class OrderService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public Page<OrderDTO> getAllOrders(Pageable pagination) {
-       return orderRepository
-               .findAll(pagination)
-               .map(order -> modelMapper.map(order, OrderDTO.class));
+    public List<OrderDTO> getAllOrders() {
+        return orderRepository.findAll().stream()
+                .map(p -> modelMapper.map(p, OrderDTO.class))
+                .collect(Collectors.toList());
     }
 
     public OrderDTO getOrderById(UUID id) {
@@ -38,6 +38,10 @@ public class OrderService {
     }
 
     public OrderDTO createOrder(OrderDTO orderDTO) {
+
+        String uuidString = UUID.randomUUID().toString();
+        orderDTO.setId(UUID.fromString(uuidString));
+
         Order order = modelMapper.map(orderDTO, Order.class);
         order.setStatus(Status.CREATED);
         order.getItems().forEach(item -> item.setOrder(order));

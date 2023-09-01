@@ -14,6 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.net.URI;
+import java.util.List;
 
 @Data
 @RestController
@@ -28,8 +29,8 @@ public class ProductController {
 
 
     @GetMapping("/")
-    public Page<ProductDTO> getAllProducts(@PageableDefault(size = 10) Pageable pagination)  {
-        return service.getAllProducts(pagination);
+    public List<ProductDTO> getAllProducts()  {
+        return service.getAllProducts();
     }
 
     @GetMapping("/{id}")

@@ -4,9 +4,6 @@ import br.com.challengejava.orderapplication.dto.orders.OrderDTO;
 import br.com.challengejava.orderapplication.dto.orders.StatusDto;
 import br.com.challengejava.orderapplication.service.orders.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -14,6 +11,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -24,8 +22,8 @@ public class OrderController {
     private OrderService service;
 
     @GetMapping("/")
-    public Page<OrderDTO> getAllOrders(@PageableDefault(size = 10) Pageable pagination)  {
-        return service.getAllOrders(pagination);
+    public List<OrderDTO> getAllOrders()  {
+        return service.getAllOrders();
     }
 
     @GetMapping("/{id}")

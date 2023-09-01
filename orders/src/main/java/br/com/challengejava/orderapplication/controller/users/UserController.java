@@ -13,6 +13,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -24,8 +25,8 @@ public class UserController {
     private UserService service;
 
     @GetMapping("/")
-    public Page<UserDTO> getAllUsers(@PageableDefault(size = 10) Pageable pagination)  {
-        return service.getAllUsers(pagination);
+    public List<UserDTO> getAllUsers()  {
+        return service.getAllUsers();
     }
 
     @GetMapping("/{id}")
@@ -51,7 +52,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> updateOrderStatus(@PathVariable Long id, @RequestBody @Valid UserDTO userDto) {
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @RequestBody @Valid UserDTO userDto) {
         UserDTO update = service.updateUser(id, userDto);
         return ResponseEntity.ok(update);
     }
